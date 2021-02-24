@@ -1,0 +1,48 @@
+body {
+    background-color: #CB8534;
+}
+#playerZone{
+    display: flex;
+    justify-content: space-between;
+    font: 32pt bold;
+    font-family: sans-serif;
+    padding: 0 50px 0 50px;
+}
+
+
+#displayGrid{
+    display: grid;
+    grid-template-columns: 60px 60px 60px;
+    grid-template-rows: 60px 60px 60px;
+    justify-content: center;
+    margin: 0px;
+
+}
+
+.cell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    font: 32pt bold;
+    font-family: sans-serif;
+    color:#FFEDD6;
+}
+
+.cell:hover{
+    background-color: #792B8D;
+    color: #379A28;
+}
+
+#c0,#c1,#c2 {border-top: none;}
+#c0,#c3,#c6 {border-left: none;}
+#c2,#c5,#c8 {border-right: none;}
+#c6,#c7,#c8 {border-bottom: none;}
+
+/*
+
+background-color: #792B8D;
+
+background-color: #379A28;
+
+*/
