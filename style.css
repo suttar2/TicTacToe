@@ -9,6 +9,14 @@ body {
     padding: 0 50px 0 50px;
 }
 
+#p0 {
+    color: #792B8D;
+
+}
+
+#p1 {
+    color: #379A28;
+}
 
 #displayGrid{
     display: grid;
@@ -31,7 +39,6 @@ body {
 
 .cell:hover{
     background-color: #792B8D;
-    color: #379A28;
 }
 
 #c0,#c1,#c2 {border-top: none;}
