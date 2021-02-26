@@ -1,10 +1,21 @@
 const gameBoard =(() => {
     
-    const board = ["X","O", "X",
-                   "X","X", "O",
-                   "X","O", " ",]
+    const board = ["","", "",
+                   "","", "",
+                   "","", "",]
 
     const players = []
+
+    displayGrid.addEventListener('click', (turn) => {
+
+        if (turn.target.className === 'cell'){
+
+        gameBoard.board.splice(turn.target.id.charAt(1), 1, 'X')
+        
+    }
+        DisplayController.displayGrid(gameBoard.board);
+        console.table(players)
+    });
 
     return {
         board,
@@ -13,13 +24,26 @@ const gameBoard =(() => {
 
 })();
 
+const changePlayer = (x) => { 
+    if (x.players[0] === currentPlayer){
+        players[1]
+    
+};
+
+};
+
 
 const createPlayer = () => {
-    getPlayerName = prompt(`Enter Player ${ gameBoard.players.length +1 }'s name:`)
-    gameBoard.players.push(getPlayerName)
-    return {
-        getPlayerName
-    }
+    
+    do {getPlayerName = prompt(`Enter Player ${ gameBoard.players.length +1 }'s name:`)}
+        while (getPlayerName.length < 0) 
+        
+        //add other data validation here
+
+    gameBoard.players.push(getPlayerName);
+
+    gameBoard.players[0].isTurn = true
+    gameBoard.players[0].isTurn = false
 }
 
 const playGame = () => {
@@ -27,9 +51,6 @@ const playGame = () => {
     createPlayer()
     DisplayController.displayGrid(gameBoard.board);
     DisplayController.displayPlayer(gameBoard.players);
-    const turncounter = () => {
-        
-    }
     
 }
     
@@ -39,6 +60,8 @@ const DisplayController = (() => {
     const displayGrid = (anArray) => {
         
         let display = document.getElementById("displayGrid")
+
+        while (display.firstChild) {display.removeChild(display.lastChild)}
 
         for (i = 0; i < anArray.length; i++){
             let cell = document.createElement('div');
