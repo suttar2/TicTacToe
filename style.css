@@ -38,7 +38,13 @@ body {
 }
 
 .cell:hover{
+    background-color: grey;
+}
+.Xhover:hover{
     background-color: #792B8D;
+}
+.Ohover:hover{
+    background-color: #379A28;
 }
 
 #c0,#c1,#c2 {border-top: none;}
@@ -46,10 +52,3 @@ body {
 #c2,#c5,#c8 {border-right: none;}
 #c6,#c7,#c8 {border-bottom: none;}
 
-/*
-
-background-color: #792B8D;
-
-background-color: #379A28;
-
-*/
