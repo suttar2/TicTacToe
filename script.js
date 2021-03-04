@@ -6,13 +6,28 @@ const gameBoard =(() => {
 
     const players = []
 
-    const checkWin = (anArray) => {
+    const checkWin = (anArray, M) => {
         
         let winState =[
 
-            [0, 1, 2],
-            [3, 4, 5],
-            [6, 7, 8],
+            ["X", "X", "X", 
+            "","","", 
+            "O","O","O"],
+
+            ["","","", 
+            M, M, M, 
+            "","",""],
+
+            ["","","",
+             "","","", 
+            M, M, M,],
+
+            [M,"","",
+             M,"","",
+             M,"",""]
+
+
+
 
             [0, 3, 6],
             [1, 4, 7],
@@ -21,22 +36,35 @@ const gameBoard =(() => {
             [0, 4, 8],
             [6, 4, 2]
         ]
-        
-        let indicies = []
+        if (anArray === winState[0]){console.log('works')}
 
-        anArray.forEach((element, index) => {
-            if(element !== ""){
-                indicies.push(index);    
-            }
-        });
+        let test = ["","","",
+                    "","","",
+                    "","",""]
 
-        for (i=0; i<winState.length; i++){
-            if (gameBoard.board[i] === winState[i]){
-                console.log('winner')
-            }
+        for (i = 0; i < winState.length; i++){
+                if (anArray[i].includes(M)){
+                    test.splice([i],1, M)
+                    if (test === winState[0]){console.log("winner")}
+                }
+    
         }
 
-        return indicies
+
+
+
+
+        // anArray.forEach((marker, index) => {
+        //     if(element === marker){indicies.push("X"); }
+        // });
+
+        // for (i=0; i < winState.length; i++){
+        //     if (gameBoard.board[i] === winState[i]){
+        //         console.log('winner')
+        //     }
+        // }
+
+        // return indicies
 
     
 
@@ -89,9 +117,12 @@ const gameFlow = (p1, p2) =>{
             DisplayController.displayGrid(gameBoard.board);
 
 
-            let check = gameBoard.checkWin(gameBoard.board)
-
-            console.log("occupied spaces are:", check)
+            // // let Xcheck = gameBoard.checkWin(gameBoard.board, "X")
+            // // let Ocheck = gameBoard.checkWin(gameBoard.board, "O")
+            // console.log(Xcheck)
+            // console.log(Ocheck)
+            gameBoard.checkWin(gameBoard.board, "X")
+            gameBoard.checkWin(gameBoard.board, "O")
             console.log("the board contains:", gameBoard.board)
 
             }
