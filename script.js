@@ -6,75 +6,58 @@ const gameBoard =(() => {
 
     const players = []
 
-    const checkWin = (anArray, M) => {
+    const checkWin = (marker) => {
         
         let winState =[
 
-            ["X", "X", "X", 
-            "","","", 
-            "O","O","O"],
-
-            ["","","", 
-            M, M, M, 
-            "","",""],
-
-            ["","","",
-             "","","", 
-            M, M, M,],
-
-            [M,"","",
-             M,"","",
-             M,"",""]
-
-
-
-
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
             [0, 3, 6],
             [1, 4, 7],
             [2, 5, 8],
-
             [0, 4, 8],
             [6, 4, 2]
         ]
-        if (anArray === winState[0]){console.log('works')}
 
-        let test = ["","","",
-                    "","","",
-                    "","",""]
+        let counter = 0
 
-        for (i = 0; i < winState.length; i++){
-                if (anArray[i].includes(M)){
-                    test.splice([i],1, M)
-                    if (test === winState[0]){console.log("winner")}
-                }
+        for(i = 0; i < winState.length; i++){     
+
+            counter = 0
+            
+            for(j = 0; j < winState[i].length; j++){
+            
+                if (marker === gameBoard.board[winState[i][j]]){
+                    counter++
+
+                    if (counter >= 3 && marker === "X") {
+                        DisplayController.displayWinner(`${players[0]} Wins!`)
     
+                    }
+    
+                    if (counter >= 3 && marker === "O") {
+                        DisplayController.displayWinner(`${players[1]} Wins!`)
+    
+                    }
+    
+
+                }
+            
+
+            }
+
         }
 
-
-
-
-
-        // anArray.forEach((marker, index) => {
-        //     if(element === marker){indicies.push("X"); }
-        // });
-
-        // for (i=0; i < winState.length; i++){
-        //     if (gameBoard.board[i] === winState[i]){
-        //         console.log('winner')
-        //     }
-        // }
-
-        // return indicies
-
-    
-
+        if (!gameBoard.board.includes("")){
+            DisplayController.displayWinner('Tie!')
+        }
     }
     
-
     return {
         board,
         players,
-        checkWin
+        checkWin,
     };
 
 })();
@@ -83,29 +66,25 @@ const gameBoard =(() => {
 const createPlayer = (marker) => {
     do {newPlayer = prompt(`Enter Player ${ gameBoard.players.length +1 }'s name:`)}
     while (newPlayer.length < 0) 
-        
-    newPlayer.marker = marker;
-    this.designation = newPlayer
+
 
     gameBoard.players.push(newPlayer);
-    return{marker, designation}
+
+    return{marker}
 }
 
 const gameFlow = (p1, p2) =>{
     
-    let currentPlayer = p1;    
+    let currentPlayer = p1;
    
     displayGrid.addEventListener('mouseover', (e) =>{
-
         if (e.target.className === 'cell')
         {e.target.classList.add(`${currentPlayer.marker}hover`)}
-         
     });
 
-    displayGrid.addEventListener('click', (e) => {
 
+    displayGrid.addEventListener('click', (e) => {
         if (e.target.className.charAt(0,1) === 'c') {
-        
             if (gameBoard.board[e.target.id.charAt(1)] === ""){
 
             gameBoard.board.splice(e.target.id.charAt(1), 1, currentPlayer.marker)   
@@ -116,29 +95,24 @@ const gameFlow = (p1, p2) =>{
             
             DisplayController.displayGrid(gameBoard.board);
 
-
-            // // let Xcheck = gameBoard.checkWin(gameBoard.board, "X")
-            // // let Ocheck = gameBoard.checkWin(gameBoard.board, "O")
-            // console.log(Xcheck)
-            // console.log(Ocheck)
-            gameBoard.checkWin(gameBoard.board, "X")
-            gameBoard.checkWin(gameBoard.board, "O")
-            console.log("the board contains:", gameBoard.board)
+            gameBoard.checkWin("X")
+            gameBoard.checkWin("O")
 
             }
-
     
     });
 
-
-
+    return{currentPlayer}
 
 };
 
 const DisplayController = (() => {
+
     const displayGrid = (anArray) => {
         let display = document.getElementById("displayGrid")
+
         while (display.firstChild) {display.removeChild(display.lastChild)}
+        
         for (i = 0; i < anArray.length; i++){
             let cell = document.createElement('div');
                 cell.innerHTML = anArray[i];
@@ -159,17 +133,21 @@ const DisplayController = (() => {
         }
     };
 
-    return {displayGrid, displayPlayer};
+    const displayWinner = (winner) => {
+        let display = document.getElementById("announcementZone")
+        display.innerHTML = winner
+    }
+
+    return {displayGrid, displayPlayer, displayWinner};
+
 })();
 
 
 
 const playGame = () => { 
-    let player1 = createPlayer("X")
-    let player2 = createPlayer("O")
+    gameFlow(createPlayer("X"), createPlayer("O"));
     DisplayController.displayGrid(gameBoard.board);
     DisplayController.displayPlayer(gameBoard.players);
-    gameFlow(player1, player2);
 }
 
 playGame();
@@ -192,3 +170,32 @@ playGame();
 // // };
 
 // };
+
+
+
+
+
+        // for (i = 0; i < winState.length; i++){
+        //         if (anArray[i].includes(M)){
+        //             test.push(anArray[i])
+        //     }
+    
+        // }
+        // console.log(test)
+
+
+
+
+        // anArray.forEach((marker, index) => {
+        //     if(element === marker){indicies.push("X"); }
+        // });
+
+        // for (i=0; i < winState.length; i++){
+        //     if (gameBoard.board[i] === winState[i]){
+        //         console.log('winner')
+        //     }
+        // }
+
+        // return indicies
+
+    

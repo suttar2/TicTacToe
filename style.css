@@ -9,6 +9,16 @@ body {
     padding: 0 50px 0 50px;
 }
 
+#announcementZone{
+    font: 32pt bold;
+    font-family: sans-serif;
+    padding: 0 50px 0 50px;
+    margin: auto;
+    margin-top:1em;
+    justify-content: center;
+    display: flex;
+}
+
 #p0 {
     color: #792B8D;
 
