@@ -1,6 +1,7 @@
 body {
     background-color: #CB8534;
     font-family: sans-serif;
+    padding: 2vh;
 }
 #playerZone{
     display: flex;

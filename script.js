@@ -1,3 +1,40 @@
+const DisplayController = (() => {
+
+    const displayGrid = (anArray) => {
+        let display = document.getElementById("displayGrid")
+
+        while (display.firstChild) {display.removeChild(display.lastChild)}
+        
+        for (i = 0; i < anArray.length; i++){
+            let cell = document.createElement('div');
+                cell.innerHTML = anArray[i];
+                cell.id = "c"+i
+                cell.className = "cell"
+            display.appendChild(cell);
+        };
+    };
+
+    const displayPlayer = (playerList) => {
+        let display = document.getElementById("playerZone");
+
+        for(i = 0; i < playerList.length; i++){
+            let playerShow = document.createElement('div');
+                playerShow.innerHTML = gameBoard.players[i];
+                playerShow.id = "p"+[i]
+            display.appendChild(playerShow);
+        }
+    };
+
+    const displayWinner = (winner) => {
+        let display = document.getElementById("announcementZone")
+        display.innerHTML = winner
+
+    }
+
+    return {displayGrid, displayPlayer, displayWinner};
+
+})();
+
 const gameBoard =(() => {
   
     const board = ["","", "",
@@ -33,7 +70,6 @@ const gameBoard =(() => {
 
                     if (counter >= 3 && marker === "X") {
                         DisplayController.displayWinner(`${players[0]} Wins!`)
-    
                     }
     
                     if (counter >= 3 && marker === "O") {
@@ -44,7 +80,6 @@ const gameBoard =(() => {
 
                 }
             
-
             }
 
         }
@@ -76,7 +111,7 @@ const createPlayer = (marker) => {
 const gameFlow = (p1, p2) =>{
     
     let currentPlayer = p1;
-   
+
     displayGrid.addEventListener('mouseover', (e) =>{
         if (e.target.className === 'cell')
         {e.target.classList.add(`${currentPlayer.marker}hover`)}
@@ -97,51 +132,10 @@ const gameFlow = (p1, p2) =>{
 
             gameBoard.checkWin("X")
             gameBoard.checkWin("O")
-
             }
     
     });
-
-    return{currentPlayer}
-
 };
-
-const DisplayController = (() => {
-
-    const displayGrid = (anArray) => {
-        let display = document.getElementById("displayGrid")
-
-        while (display.firstChild) {display.removeChild(display.lastChild)}
-        
-        for (i = 0; i < anArray.length; i++){
-            let cell = document.createElement('div');
-                cell.innerHTML = anArray[i];
-                cell.id = "c"+i
-                cell.className = "cell"
-            display.appendChild(cell);
-        };
-    };
-
-    const displayPlayer = (playerList) => {
-        let display = document.getElementById("playerZone");
-
-        for(i = 0; i < playerList.length; i++){
-            let playerShow = document.createElement('div');
-                playerShow.innerHTML = gameBoard.players[i];
-                playerShow.id = "p"+[i]
-            display.appendChild(playerShow);
-        }
-    };
-
-    const displayWinner = (winner) => {
-        let display = document.getElementById("announcementZone")
-        display.innerHTML = winner
-    }
-
-    return {displayGrid, displayPlayer, displayWinner};
-
-})();
-
 
 
 const playGame = () => { 
