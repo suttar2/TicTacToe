@@ -5,7 +5,7 @@ Motivation:
     I'm looking to expand my knowledge of js, page elements, DOM manipulation, CSS styling and more importantly, Factory Functions and the Module Pattern.
 
 Build status:
-    Just began.
+    Currently let's users click and play the game, declares winner or tie. 
 
 How to use:
     Click on the spaces.
