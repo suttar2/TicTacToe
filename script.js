@@ -42,11 +42,6 @@ const gameBoard =(() => {
                    "","", "",]
 
     const players = []
-
-    //maybe if I make a toggle function? Didn't work.
-    // const gameToggle = (condition) => {
-    //     condition ? condition = false : condition = true
-    //     console.log(gameToggle);
     
     //}
     //    trying to make a function that forEach space on the game board if that space === "" that space now equals " "
@@ -79,6 +74,10 @@ const gameBoard =(() => {
 
         let counter = 0
 
+        let won = false;
+
+        if (won === false){
+
         for(i = 0; i < winState.length; i++){     
 
             counter = 0
@@ -90,13 +89,13 @@ const gameBoard =(() => {
 
                     if (counter >= 3 && marker === "X") {
                         DisplayController.displayWinner(`${players[0]} Wins!`)
-                        gameFlow.gameOn = false
+                        won = true
                         
                     }
     
                     if (counter >= 3 && marker === "O") {
                         DisplayController.displayWinner(`${players[1]} Wins!`)
-                        gameFlow.gameOn = false
+                        won = true
     
                     }
     
@@ -109,7 +108,9 @@ const gameBoard =(() => {
 
         if (!gameBoard.board.includes("")){
             DisplayController.displayWinner('Tie!')
-            gameFlow.gameOn = false
+            won = true
+        }
+
         }
     }
     
@@ -138,34 +139,34 @@ const createPlayer = (name, marker) => {
 const gameFlow = (p1, p2) =>{
     
     let currentPlayer = p1;
-    const gameOn = true;
+    // const gameOn = true;
+
     displayGrid.addEventListener('mouseover', (e) =>{
         if (e.target.className === 'cell')
         {e.target.classList.add(`${currentPlayer.marker}hover`)}
     });
 
-    if (gameOn === true){
-
     displayGrid.addEventListener('click', (e) => {
 
         if (e.target.className.charAt(0,1) === 'c') {
             if (gameBoard.board[e.target.id.charAt(1)] === ""){
+            
+                gameBoard.board.splice(e.target.id.charAt(1), 1, currentPlayer.marker)   
+                currentPlayer === p1 ? currentPlayer = p2 : currentPlayer = p1;
+                
+                
 
-            gameBoard.board.splice(e.target.id.charAt(1), 1, currentPlayer.marker)   
-            currentPlayer === p1 ? currentPlayer = p2 : currentPlayer = p1;
-            
-            }; 
-            
-            DisplayController.displayGrid(gameBoard.board);
+                
+                DisplayController.displayGrid(gameBoard.board);
+            }
 
             gameBoard.checkWin("X")
             gameBoard.checkWin("O")
             }
     
     });
-    }
 
-    return{gameOn}
+    // return{gameOn}
 
 };
 
@@ -174,6 +175,7 @@ const playGame = () => {
     gameFlow(createPlayer("Xplayer","X"), createPlayer("Oplayer","O"));
     DisplayController.displayGrid(gameBoard.board);
     DisplayController.displayPlayer(gameBoard.players);
+
     
 }
 
