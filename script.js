@@ -43,23 +43,25 @@ const gameBoard =(() => {
 
     const players = []
 
-    const gameToggle = (condition) => {
-        condition ? condition = false : condition = true
-        console.log(gameToggle);
+    //maybe if I make a toggle function? Didn't work.
+    // const gameToggle = (condition) => {
+    //     condition ? condition = false : condition = true
+    //     console.log(gameToggle);
     
-    }
-
-    const clearBoard = (aBoard) =>{
-        aBoard.forEach(element => {
-            if (element === ""){
-                element = "-"
-            }
+    //}
+    //    trying to make a function that forEach space on the game board if that space === "" that space now equals " "
+    // const clearBoard = (aBoard) =>{
+    //     aBoard.forEach(element => {
+    //         if (element === ""){
+    //             element = "-"
+    //         }
             
-        });
-        return{aBoard}
-    }
+    //     });
+    //     return{aBoard}
 
-//    forEach space on the game board if that space === "" that space now equals " "
+    //    }
+
+
 
     const checkWin = (marker) => {
         
@@ -150,7 +152,6 @@ const gameFlow = (p1, p2) =>{
             if (gameBoard.board[e.target.id.charAt(1)] === ""){
 
             gameBoard.board.splice(e.target.id.charAt(1), 1, currentPlayer.marker)   
-            
             currentPlayer === p1 ? currentPlayer = p2 : currentPlayer = p1;
             
             }; 
@@ -179,6 +180,8 @@ const playGame = () => {
 playGame();
 
 
+
+// all old code below
 // const DisplayController = {
 //     displayBoard: gameBoard.board.forEach(element => {
 //         let cell = document.createElement('div')
