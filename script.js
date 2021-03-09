@@ -43,6 +43,24 @@ const gameBoard =(() => {
 
     const players = []
 
+    const gameToggle = (condition) => {
+        condition ? condition = false : condition = true
+        console.log(gameToggle);
+    
+    }
+
+    const clearBoard = (aBoard) =>{
+        aBoard.forEach(element => {
+            if (element === ""){
+                element = "-"
+            }
+            
+        });
+        return{aBoard}
+    }
+
+//    forEach space on the game board if that space === "" that space now equals " "
+
     const checkWin = (marker) => {
         
         let winState =[
@@ -70,10 +88,13 @@ const gameBoard =(() => {
 
                     if (counter >= 3 && marker === "X") {
                         DisplayController.displayWinner(`${players[0]} Wins!`)
+                        gameFlow.gameOn = false
+                        
                     }
     
                     if (counter >= 3 && marker === "O") {
                         DisplayController.displayWinner(`${players[1]} Wins!`)
+                        gameFlow.gameOn = false
     
                     }
     
@@ -86,6 +107,7 @@ const gameBoard =(() => {
 
         if (!gameBoard.board.includes("")){
             DisplayController.displayWinner('Tie!')
+            gameFlow.gameOn = false
         }
     }
     
@@ -98,10 +120,13 @@ const gameBoard =(() => {
 })();
 
 
-const createPlayer = (marker) => {
-    do {newPlayer = prompt(`Enter Player ${ gameBoard.players.length +1 }'s name:`)}
-    while (newPlayer.length < 0) 
+const createPlayer = (name, marker) => {
 
+    // used to prompt for player names below
+    // do {newPlayer = prompt(`Enter Player ${ gameBoard.players.length +1 }'s name:`)}
+    // while (newPlayer.length < 0) 
+
+    newPlayer = name
 
     gameBoard.players.push(newPlayer);
 
@@ -111,14 +136,16 @@ const createPlayer = (marker) => {
 const gameFlow = (p1, p2) =>{
     
     let currentPlayer = p1;
-
+    const gameOn = true;
     displayGrid.addEventListener('mouseover', (e) =>{
         if (e.target.className === 'cell')
         {e.target.classList.add(`${currentPlayer.marker}hover`)}
     });
 
+    if (gameOn === true){
 
     displayGrid.addEventListener('click', (e) => {
+
         if (e.target.className.charAt(0,1) === 'c') {
             if (gameBoard.board[e.target.id.charAt(1)] === ""){
 
@@ -135,13 +162,18 @@ const gameFlow = (p1, p2) =>{
             }
     
     });
+    }
+
+    return{gameOn}
+
 };
 
 
 const playGame = () => { 
-    gameFlow(createPlayer("X"), createPlayer("O"));
+    gameFlow(createPlayer("Xplayer","X"), createPlayer("Oplayer","O"));
     DisplayController.displayGrid(gameBoard.board);
     DisplayController.displayPlayer(gameBoard.players);
+    
 }
 
 playGame();
