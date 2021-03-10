@@ -28,7 +28,6 @@ const DisplayController = (() => {
     const displayWinner = (winner) => {
         let display = document.getElementById("announcementZone")
         display.innerHTML = winner
-
     }
 
     return {displayGrid, displayPlayer, displayWinner};
@@ -42,21 +41,6 @@ const gameBoard =(() => {
                    "","", "",]
 
     const players = []
-    
-    //}
-    //    trying to make a function that forEach space on the game board if that space === "" that space now equals " "
-    // const clearBoard = (aBoard) =>{
-    //     aBoard.forEach(element => {
-    //         if (element === ""){
-    //             element = "-"
-    //         }
-            
-    //     });
-    //     return{aBoard}
-
-    //    }
-
-
 
     const checkWin = (marker) => {
         
@@ -72,45 +56,25 @@ const gameBoard =(() => {
             [6, 4, 2]
         ]
 
-        let counter = 0
-
-        let won = false;
-
-        if (won === false){
+        let counter = 0;
 
         for(i = 0; i < winState.length; i++){     
-
             counter = 0
             
             for(j = 0; j < winState[i].length; j++){
-            
+
                 if (marker === gameBoard.board[winState[i][j]]){
                     counter++
 
-                    if (counter >= 3 && marker === "X") {
-                        DisplayController.displayWinner(`${players[0]} Wins!`)
-                        won = true
-                        
+                    if (counter >= 3) {
+                        DisplayController.displayWinner(`${marker} Wins!`)
                     }
-    
-                    if (counter >= 3 && marker === "O") {
-                        DisplayController.displayWinner(`${players[1]} Wins!`)
-                        won = true
-    
-                    }
-    
 
+                    else if (!gameBoard.board.includes("")){
+                        DisplayController.displayWinner('Tie!')
+                    }
                 }
-            
             }
-
-        }
-
-        if (!gameBoard.board.includes("")){
-            DisplayController.displayWinner('Tie!')
-            won = true
-        }
-
         }
     }
     
@@ -125,21 +89,15 @@ const gameBoard =(() => {
 
 const createPlayer = (name, marker) => {
 
-    // used to prompt for player names below
-    // do {newPlayer = prompt(`Enter Player ${ gameBoard.players.length +1 }'s name:`)}
-    // while (newPlayer.length < 0) 
+    gameBoard.players.push(name);
 
-    newPlayer = name
-
-    gameBoard.players.push(newPlayer);
-
-    return{marker}
+    return{ marker }
 }
 
 const gameFlow = (p1, p2) =>{
     
     let currentPlayer = p1;
-    // const gameOn = true;
+
 
     displayGrid.addEventListener('mouseover', (e) =>{
         if (e.target.className === 'cell')
@@ -149,24 +107,24 @@ const gameFlow = (p1, p2) =>{
     displayGrid.addEventListener('click', (e) => {
 
         if (e.target.className.charAt(0,1) === 'c') {
+
             if (gameBoard.board[e.target.id.charAt(1)] === ""){
+
+                if (document.getElementById("announcementZone").innerHTML === ""){
             
-                gameBoard.board.splice(e.target.id.charAt(1), 1, currentPlayer.marker)   
-                currentPlayer === p1 ? currentPlayer = p2 : currentPlayer = p1;
+                gameBoard.board.splice(e.target.id.charAt(1), 1, currentPlayer.marker)
                 
-                
-
-                
+                gameBoard.checkWin(currentPlayer.marker)
+            
+                currentPlayer === p1 ? currentPlayer = p2 : currentPlayer = p1;    
+            
                 DisplayController.displayGrid(gameBoard.board);
-            }
 
-            gameBoard.checkWin("X")
-            gameBoard.checkWin("O")
+                }
             }
+        }
     
     });
-
-    // return{gameOn}
 
 };
 
@@ -179,54 +137,4 @@ const playGame = () => {
     
 }
 
-playGame();
-
-
-
-// all old code below
-// const DisplayController = {
-//     displayBoard: gameBoard.board.forEach(element => {
-//         let cell = document.createElement('div')
-//             cell.id = element.indexOf
-
-        
-//     }),
-// };
-
-
-// // // const changePlayer = (x) => { 
-// // //     if (x.players[0] === currentPlayer){
-// // //         players[1]
-// // //This was me trying to figure out how to switch the active player, but realized that didn't matter much if I couldn't assign a property to my players
-// // };
-
-// };
-
-
-
-
-
-        // for (i = 0; i < winState.length; i++){
-        //         if (anArray[i].includes(M)){
-        //             test.push(anArray[i])
-        //     }
-    
-        // }
-        // console.log(test)
-
-
-
-
-        // anArray.forEach((marker, index) => {
-        //     if(element === marker){indicies.push("X"); }
-        // });
-
-        // for (i=0; i < winState.length; i++){
-        //     if (gameBoard.board[i] === winState[i]){
-        //         console.log('winner')
-        //     }
-        // }
-
-        // return indicies
-
-    
+playGame();    

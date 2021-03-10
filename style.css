@@ -24,11 +24,13 @@ body {
 
 #p0 {
     color: #792B8D;
+    cursor: pointer;
 
 }
 
 #p1 {
-    color: #379A28; 
+    color: #379A28;
+    cursor: pointer;
 }
 
 #displayGrid{
@@ -46,7 +48,8 @@ body {
     border: .5vw solid black;
     font: 8vw bold;
     font-family: sans-serif;
-    color:#FFEDD6;
+    color:#eee6e6;
+    cursor: pointer;
 }
 
 .cell:hover{
