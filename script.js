@@ -14,12 +14,12 @@ const DisplayController = (() => {
         };
     };
 
-    const displayPlayer = (playerList) => {
+    const displayPlayers = (playerList) => {
         let display = document.getElementById("playerZone");
 
         for(i = 0; i < playerList.length; i++){
             let playerShow = document.createElement('div');
-                playerShow.innerHTML = gameBoard.players[i];
+                playerShow.innerHTML = gameBoard.players[i].name;
                 playerShow.id = "p"+[i]
             display.appendChild(playerShow);
         }
@@ -30,7 +30,11 @@ const DisplayController = (() => {
         display.innerHTML = winner
     }
 
-    return {displayGrid, displayPlayer, displayWinner};
+    const wipeBoard = () => {
+        console.log('pizza')
+    }
+
+    return {displayGrid, displayPlayers, displayWinner, wipeBoard};
 
 })();
 
@@ -40,7 +44,16 @@ const gameBoard =(() => {
                    "","", "",
                    "","", "",]
 
-    const players = []
+    const players = [
+        {
+            name: "X Player",
+            marker: "X"
+        },
+        {
+            name: "Player O",
+            marker: "O"
+        }
+        ]
 
     const checkWin = (marker) => {
         
@@ -89,9 +102,11 @@ const gameBoard =(() => {
 
 const createPlayer = (name, marker) => {
 
+    name.marker = marker
+
     gameBoard.players.push(name);
 
-    return{ marker }
+    return{ name, marker }
 }
 
 const gameFlow = (p1, p2) =>{
@@ -106,33 +121,39 @@ const gameFlow = (p1, p2) =>{
 
     displayGrid.addEventListener('click', (e) => {
 
-        if (e.target.className.charAt(0,1) === 'c') {
+        if (e.target.className.charAt(0,1) === 'c' && gameBoard.board[e.target.id.charAt(1)] === ""){
 
-            if (gameBoard.board[e.target.id.charAt(1)] === ""){
+            if (document.getElementById("announcementZone").innerHTML === ""){
+        
+            gameBoard.board.splice(e.target.id.charAt(1), 1, currentPlayer.marker)
+            
+            gameBoard.checkWin(currentPlayer.marker)
+        
+            currentPlayer === p1 ? currentPlayer = p2 : currentPlayer = p1;    
+        
+            DisplayController.displayGrid(gameBoard.board);
 
-                if (document.getElementById("announcementZone").innerHTML === ""){
-            
-                gameBoard.board.splice(e.target.id.charAt(1), 1, currentPlayer.marker)
-                
-                gameBoard.checkWin(currentPlayer.marker)
-            
-                currentPlayer === p1 ? currentPlayer = p2 : currentPlayer = p1;    
-            
-                DisplayController.displayGrid(gameBoard.board);
+            //
 
-                }
+
+
+            //
             }
         }
     
     });
 
+    announcementZone.addEventListener('click', (e) =>{
+        DisplayController.wipeBoard();
+    })
+
 };
 
 
-const playGame = () => { 
-    gameFlow(createPlayer("Xplayer","X"), createPlayer("Oplayer","O"));
+const playGame = () => {
+    gameFlow(gameBoard.players[0], gameBoard.players[1]);
     DisplayController.displayGrid(gameBoard.board);
-    DisplayController.displayPlayer(gameBoard.players);
+    DisplayController.displayPlayers(gameBoard.players);
 
     
 }

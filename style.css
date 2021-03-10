@@ -20,6 +20,7 @@ body {
     margin-top:5vw;
     justify-content: center;
     display: flex;
+    cursor: pointer;
 }
 
 #p0 {
