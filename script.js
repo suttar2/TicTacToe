@@ -31,7 +31,11 @@ const DisplayController = (() => {
     }
 
     const wipeBoard = () => {
-        console.log('pizza')
+        for( i = 0; i < gameBoard.board.length; i++){gameBoard.board.splice(i, 1, "")}
+        
+        document.getElementById("announcementZone").innerHTML = "";
+        DisplayController.displayGrid(gameBoard.board)
+        
     }
 
     return {displayGrid, displayPlayers, displayWinner, wipeBoard};
@@ -113,6 +117,7 @@ const gameFlow = (p1, p2) =>{
     
     let currentPlayer = p1;
 
+    announcementZone.addEventListener('click', DisplayController.wipeBoard)
 
     displayGrid.addEventListener('mouseover', (e) =>{
         if (e.target.className === 'cell')
@@ -143,9 +148,7 @@ const gameFlow = (p1, p2) =>{
     
     });
 
-    announcementZone.addEventListener('click', (e) =>{
-        DisplayController.wipeBoard();
-    })
+
 
 };
 
