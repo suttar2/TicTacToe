@@ -82,14 +82,16 @@ const gameBoard =(() => {
 
                 if (marker === gameBoard.board[winState[i][j]]){
                     counter++
+                    
+                    if (!gameBoard.board.includes("")){
+                        DisplayController.displayWinner('Tie!')
+                    }
 
                     if (counter >= 3) {
                         DisplayController.displayWinner(`${marker} Wins!`)
                     }
 
-                    else if (!gameBoard.board.includes("")){
-                        DisplayController.displayWinner('Tie!')
-                    }
+
                 }
             }
         }
